@@ -53,7 +53,7 @@
 
 /* EMOJI PICKER */
 .emoji-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-.emoji-opt { font-size: 1.5rem; cursor: pointer; padding: 6px; border-radius: 10px; border: 2px solid transparent; transition: border-color 0.15s; }
+.emoji-opt { font-size: 1.5rem; cursor: pointer; padding: 10px; border-radius: 10px; border: 2px solid transparent; transition: border-color 0.15s; background: none; -webkit-appearance: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; min-width: 48px; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
 .emoji-opt.selected { border-color: var(–green-light); background: var(–green-pale); }
 
 /* BACK BUTTON */
@@ -243,10 +243,15 @@
   // Init emoji picker
   const picker = document.getElementById('emojiPicker');
   EMOJIS.forEach(e => {
-    const btn = document.createElement('span');
+    const btn = document.createElement('button');
+    btn.type = 'button';
     btn.className = 'emoji-opt' + (e===selectedEmoji?' selected':'');
     btn.textContent = e;
-    btn.onclick = () => { selectedEmoji=e; document.querySelectorAll('.emoji-opt').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); };
+    btn.addEventListener('click', function() {
+      selectedEmoji = e;
+      document.querySelectorAll('.emoji-opt').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
     picker.appendChild(btn);
   });
 
